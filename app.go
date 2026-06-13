@@ -126,7 +126,14 @@ func (a *App) StartDiscord(ctx context.Context, cfg DiscordConfig) error {
 		return nil
 	}
 	runtime, err := discordprovider.NewRuntime(a.store, a.userResolver, a.logger, discordprovider.RuntimeConfig{
-		BotToken: cfg.BotToken,
+		BotToken:               cfg.BotToken,
+		MentionTarget:          cfg.MentionTarget,
+		AllowedGuildIDs:        cfg.AllowedGuildIDs,
+		ShardOwnerID:           cfg.ShardOwnerID,
+		ShardLeaseTTL:          cfg.ShardLeaseTTL,
+		ShardRenewEvery:        cfg.ShardRenewEvery,
+		MaxUserMessagesPerMin:  cfg.MaxUserMessagesPerMin,
+		MaxGuildMessagesPerMin: cfg.MaxGuildMessagesPerMin,
 		OnInboundPersisted: func(ctx context.Context, _ ingest.InboundMessage, res ingest.IngestResult) {
 			if a.agent == nil || !a.agent.Enabled() {
 				return
